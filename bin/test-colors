@@ -1,0 +1,100 @@
+#!/bin/bash
+# vim:tw=0:ts=2:sw=2:et:norl:ft=sh
+# Project: https://github.com/landonb/sh-colors#🤸
+# License: MIT
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+
+test-colors () {
+  create_base_color_names () {
+    term_color_names+=('fg_pink')
+    term_color_names+=('fg_orange')
+    term_color_names+=('fg_skyblue')
+    term_color_names+=('fg_mediumgrey')
+    term_color_names+=('fg_lavender')
+    term_color_names+=('fg_tan')
+    term_color_names+=('fg_forest')
+    term_color_names+=('fg_maroon')
+    term_color_names+=('fg_hotpink')
+    term_color_names+=('fg_mintgreen')
+    term_color_names+=('fg_lightorange')
+    term_color_names+=('fg_lightred')
+    term_color_names+=('fg_jade')
+    term_color_names+=('fg_lime')
+
+    term_color_names+=('bg_pink')
+    term_color_names+=('bg_orange')
+    term_color_names+=('bg_skyblue')
+    term_color_names+=('bg_mediumgrey')
+    term_color_names+=('bg_lavender')
+    term_color_names+=('bg_tan')
+    term_color_names+=('bg_forest')
+    term_color_names+=('bg_maroon')
+    term_color_names+=('bg_hotpink')
+    term_color_names+=('bg_mintgreen')
+    term_color_names+=('bg_lightorange')
+    term_color_names+=('bg_lightred')
+    term_color_names+=('bg_jade')
+    term_color_names+=('bg_lime')
+
+    term_color_names+=('fg_black')
+    term_color_names+=('fg_red')
+    term_color_names+=('fg_green')
+    term_color_names+=('fg_yellow')
+    term_color_names+=('fg_blue')
+    term_color_names+=('fg_magenta')
+    term_color_names+=('fg_cyan')
+    term_color_names+=('fg_lightgray')
+    term_color_names+=('fg_darkgray')
+    term_color_names+=('fg_lightred')
+    term_color_names+=('fg_lightgreen')
+    term_color_names+=('fg_lightyellow')
+    term_color_names+=('fg_lightblue')
+    term_color_names+=('fg_lightmagenta')
+    term_color_names+=('fg_lightcyan')
+    term_color_names+=('fg_white')
+
+    term_color_names+=('bg_black')
+    term_color_names+=('bg_red')
+    term_color_names+=('bg_green')
+    term_color_names+=('bg_yellow')
+    term_color_names+=('bg_blue')
+    term_color_names+=('bg_magenta')
+    term_color_names+=('bg_cyan')
+    term_color_names+=('bg_lightgray')
+    term_color_names+=('bg_darkgray')
+    term_color_names+=('bg_lightred')
+    term_color_names+=('bg_lightgreen')
+    term_color_names+=('bg_lightyellow')
+    term_color_names+=('bg_lightblue')
+    term_color_names+=('bg_lightmagenta')
+    term_color_names+=('bg_lightcyan')
+    term_color_names+=('bg_white')
+  }
+
+  declare -a term_color_names
+  term_color_names=()
+  create_base_color_names
+
+  _echo () {
+    [ "$(echo -e)" = '' ] && echo -e "${@}" || echo "${@}"
+  }
+
+  for ((i = 0; i < ${#term_color_names[@]}; i++)); do
+    local nom="${term_color_names[$i]}"
+    # BASH: `!` uses a variable's value as other variable's name.
+    _echo "Some $(eval "${nom}")}COLOR $(attr_underline)is $(attr_bold)nice$(attr_reset) surely [${nom}]."
+  done
+}
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+
+. "$(dirname ${BASH_SOURCE[0]})/colors.sh"
+
+if [[ ${BASH_SOURCE[0]} != $0 ]]; then
+  export -f test-colors
+else
+  test-colors "${@}"
+  exit $?
+fi
+
