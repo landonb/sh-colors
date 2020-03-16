@@ -1,0 +1,16 @@
+{
+  "name": "sh-colors",
+  "version": "0.0.1",
+  "repo": "landonb/sh-colors",
+  "description": "Injectable RGB color and display attribute functions",
+  "keywords": ["terminal", "term", "tty", "ansi", "escape", "colors", "console"],
+  "license": "MIT",
+  "scripts": [
+    "bin/colors.sh",
+    "bin/strip-colors",
+    "bin/test-colors",
+    "bin/test-truecolor"
+  ],
+  "install": "make install",
+}
+
