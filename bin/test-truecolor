@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 # vim:tw=0:ts=2:sw=2:et:norl:ft=sh
 # Project: https://github.com/landonb/sh-colors#🤸
 # License: MIT
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-test-truecolor () {
+test_truecolor () {
   # Author: jdhao / LastMod: 2020-03-11
   # https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
   # License: https://creativecommons.org/licenses/by-nc-nd/4.0/
@@ -32,12 +32,18 @@ test-truecolor () {
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-. "$(dirname ${BASH_SOURCE[0]})/colors.sh"
-
-if [[ ${BASH_SOURCE[0]} != $0 ]]; then
-  export -f test-truecolor
+if [ ${#BASH_SOURCE} -ne 0 ]; then
+  # Smart enough to find parent path from known vars.
+  . "$(dirname ${BASH_SOURCE[0]})/colors.sh"
 else
-  test-truecolor "${@}"
+  # POSIX does not hint at our path, so must rely on PATH.
+  . "colors.sh"
+fi
+
+if [ ${#BASH_SOURCE} -ne 0 ] && [ "${BASH_SOURCE[0]}" != "$0" ]; then
+  export -f test_truecolor
+else
+  test_truecolor "${@}"
   exit $?
 fi
 
