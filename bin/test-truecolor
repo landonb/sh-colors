@@ -32,18 +32,27 @@ test_truecolor () {
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-if [ ${#BASH_SOURCE} -ne 0 ]; then
-  # Smart enough to find parent path from known vars.
-  . "$(dirname ${BASH_SOURCE[0]})/colors.sh"
+this_file_name="test-truecolor"
+shell_sourced () { [ "$(basename -- "$0")" != "${this_file_name}" ]; }
+# Note that bash_sourced only meaningful if shell_sourced is true.
+bash_sourced () { declare -p FUNCNAME > /dev/null 2>&1; }
+
+if ! shell_sourced; then
+  # When executed in POSIX, $0 is path to this script,
+  # which lives alongside the colors library.
+  . "$(dirname -- "$0")/colors.sh"
+elif bash_sourced; then
+  # Sourced in Bash, which supplies path via environ.
+  . "$(dirname -- "${BASH_SOURCE[0]}")/colors.sh"
 else
-  # POSIX does not hint at our path, so must rely on PATH.
+  # POSIX does not reveal the sourced file path, so we insist
+  # that the user has setup PATH (or colors.sh) appropriately.
   . "colors.sh"
 fi
 
-if [ ${#BASH_SOURCE} -ne 0 ] && [ "${BASH_SOURCE[0]}" != "$0" ]; then
+if ! shell_sourced; then
+  test_truecolor
+elif bash_sourced; then
   export -f test_truecolor
-else
-  test_truecolor "${@}"
-  exit $?
 fi
 

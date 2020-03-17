@@ -113,12 +113,13 @@ test-colors () {
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-. "$(dirname ${BASH_SOURCE[0]})/colors.sh"
+# This script requires Bash, and BASH_SOURCE always
+# set, whether this file is sourced or executed.
+. "$(dirname -- "${BASH_SOURCE[0]}")/colors.sh"
 
-if [[ ${BASH_SOURCE[0]} != $0 ]]; then
-  export -f test-colors
-else
+if [ "${BASH_SOURCE[0]}" = "$0" ]; then
   test-colors "${@}"
-  exit $?
+else
+  export -f test-colors
 fi
 
