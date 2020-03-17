@@ -479,6 +479,8 @@ attr_reset () {
   printf "\033[0m"
 }
 
+# ***
+
 attr_bold () {
   _hofr_no_color && return
   # See also:
@@ -510,6 +512,25 @@ attr_underlined () {
   attr_underline
 }
 
+# Gnome/Mate do not support blink, <sigh>.
+attr_blink () {
+  _hofr_no_color && return
+  printf "\033[5m"
+}
+
+
+attr_invert () {
+  # Aka negative image.
+  _hofr_no_color && return
+  printf "\033[7m"
+}
+
+attr_hidden () {
+  # Aka invisible image.
+  _hofr_no_color && return
+  printf "\033[8m"
+}
+
 attr_strikethrough () {
   _hofr_no_color && return
   printf "\033[9m"
@@ -517,72 +538,62 @@ attr_strikethrough () {
 
 # ***
 
-# Gnome/Mate do not support blink, <sigh>.
-font_blink () {
-  _hofr_no_color && return
-  printf "\033[5m"
-}
+res_all () { attr_reset; }
 
-font_invert () {
-  _hofr_no_color && return
-  printf "\033[7m"
-}
-
-font_hidden () {
-  _hofr_no_color && return
-  printf "\033[8m"
-}
-
-reset_bold () {
+res_bold () {
   _hofr_no_color && return
   printf "\033[22m"
 }
 
-reset_dim () {
-  _hofr_no_color && return
-  printf "\033[22m"
-}
+# (lb): I do not recall what 'dim' means.
+res_dim () { res_bold; }
 
-reset_emphasis () {
+res_emphasis () {
   _hofr_no_color && return
   printf "\033[23m"
 }
 
-reset_italic () {
-  reset_emphasis
+res_italic () {
+  res_emphasis
 }
 
-reset_underline () {
+res_underline () {
   _hofr_no_color && return
   printf "\033[24m"
 }
 
-reset_underlined () {
-  reset_underline
+res_underlined () {
+  res_underline
 }
 
-reset_blink () {
+res_blink () {
   _hofr_no_color && return
   printf "\033[25m"
 }
 
-reset_reverse () {
+res_reverse () {
+  # Aka negative image.
   _hofr_no_color && return
   printf "\033[27m"
 }
 
-reset_hidden () {
+res_hidden () {
+  # Aka invisible image.
   _hofr_no_color && return
   printf "\033[28m"
 }
 
 # *** Convenience aliases.
-res_dim () { reset_dim; }
-res_emphasis () { reset_emphasis; }
-res_italic () { reset_italic; }
-res_underline () { reset_underline; }
-res_underlined () { reset_underlined; }
-res_blink () { reset_blink; }
-res_reverse () { reset_reverse; }
-res_hidden () { reset_hidden; }
+if ${SHCOLORS_INCL_RESET_VARIETY:-false}; then
+  reset_all () { attr_reset; }
+  reset_bold () { res_bold; }
+  reset_dim () { res_bold; }
+  reset_emphasis () { res_emphasis; }
+  reset_italic () { res_italic; }
+  reset_underline () { res_underline; }
+  reset_underlined () { res_underline; }
+  reset_blink () { res_blink; }
+  reset_reverse () { res_reverse; }
+  reset_hidden () { res_hidden; }
+fi
 
