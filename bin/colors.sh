@@ -535,7 +535,7 @@ font_hidden () {
 
 reset_bold () {
   _hofr_no_color && return
-  printf "\033[21m"
+  printf "\033[22m"
 }
 
 reset_dim () {
