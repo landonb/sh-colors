@@ -21,7 +21,7 @@
 # *** Color On/Off controls.
 
 # YOU: To deliberately control whether to color or not, set
-#         HOMEFRIES_NO_COLOR=true|false
+#         SHCOLORS_OFF=false|true
 #      otherwise, [ -t 1 ] is used when this script is sourced
 #      to determine if color should be used. (More specifically,
 #      it determines whether to inject ANSI control codes into the
@@ -31,20 +31,20 @@
 # Set color flag globally, because _hofr_no_color is called in a pipeline
 # from within this script, e.g., `_hofr_no_color && return`. And [ -t 1 ]
 # won't work therein (will always be falsey).
-if [ -z ${HOMEFRIES_NO_COLOR+x} ]; then
-  [ -t 1 ] &&
-    HOMEFRIES_NO_COLOR=false ||
-    HOMEFRIES_NO_COLOR=true
+if [ -z ${SHCOLORS_OFF+x} ]; then
+  [ -t 0 ] && [ -t 1 ] &&
+    SHCOLORS_OFF=false ||
+    SHCOLORS_OFF=true
 fi
 
 _hofr_no_color () {
-  if [ -z ${HOMEFRIES_NO_COLOR+x} ]; then
+  if [ -z ${SHCOLORS_OFF+x} ]; then
     # Note that in a pipeline, e.g., `_hofr_no_color && return`, [ -t 1 ]
-    # will always be false, so generally HOMEFRIES_NO_COLOR will be set,
+    # will always be false, so generally SHCOLORS_OFF will be set,
     # and this check won't be called. But it's here just in case.
     ! [ -t 1 ]
   else
-    ${HOMEFRIES_NO_COLOR}
+    ${SHCOLORS_OFF}
   fi
 }
 
