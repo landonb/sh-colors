@@ -7,13 +7,9 @@
 
 test-colors () {
 
-  _echo () {
-    [ "$(echo -e)" = '' ] && echo -e "${@}" || echo "${@}"
-  }
-
-  _echo_test () {
+  _echo_color () {
     local col="$1"
-    _echo "$(eval "${col}")COLOR $(attr_bold)is$(res_bold) $(attr_italic)so$(res_italic) $(attr_underline)nice$(res_underline)$(attr_reset) » ${col}"
+    echo "$(eval "${col}")COLOR $(attr_bold)is$(res_bold) $(attr_italic)so$(res_italic) $(attr_underline)nice$(res_underline)$(attr_reset) » ${col}"
   }
 
   # ***
@@ -98,10 +94,10 @@ test-colors () {
   shcolor_names=()
   _add_colors_rgb_truecolor_fg
   _add_colors_rgb_truecolor_bg
-  _echo "$(attr_bold)RGB truecolor injectors$(res_bold)"
-  _echo             "━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "$(attr_bold)RGB truecolor injectors$(res_bold)"
+  echo             "━━━━━━━━━━━━━━━━━━━━━━━"
   for ((i = 0; i < ${#shcolor_names[@]}; i++)); do
-    _echo_test "${shcolor_names[$i]}"
+    _echo_color "${shcolor_names[$i]}"
   done
 
   shcolor_names=()
@@ -111,7 +107,7 @@ test-colors () {
   _echo "$(attr_bold)256-color injectors$(res_bold)"
   _echo             "━━━━━━━━━━━━━━━━━━━"
   for ((i = 0; i < ${#shcolor_names[@]}; i++)); do
-    _echo_test "${shcolor_names[$i]}"
+    _echo_color "${shcolor_names[$i]}"
   done
 }
 

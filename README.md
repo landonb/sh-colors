@@ -174,7 +174,7 @@ for better portability).
 Use strip-colors to remove control codes from an input stream, e.g.,:
 
   ```shell
-  $ echo -e "$(fg_green)I'm not green!$(attr_reset)" | strip-colors
+  $ echo "$(fg_green)I'm not green!$(attr_reset)" | strip-colors
   I'm not green!
   ```
 

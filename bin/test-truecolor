@@ -22,8 +22,8 @@ test-truecolor () {
       }
       printf "\n";
   }'
-  # (lb): I added this, $('natch).
-  echo -e \
+  # (lb): I added this, $('natch). (awk is from jdhao; this echo from me.)
+  echo \
     "$(attr_bold)bold$(attr_reset) " \
     "$(attr_italic)italic$(attr_reset) " \
     "$(attr_underline)underline$(attr_reset) " \
