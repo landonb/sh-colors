@@ -1,0 +1,43 @@
+#!/bin/bash
+# vim:tw=0:ts=2:sw=2:et:norl:ft=sh
+# Project: https://github.com/landonb/sh-colors#🤸
+# License: MIT
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+
+test-truecolor () {
+  # Author: jdhao / LastMod: 2020-03-11
+  # https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
+  # License: https://creativecommons.org/licenses/by-nc-nd/4.0/
+  awk 'BEGIN{
+      s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
+      for (colnum = 0; colnum<77; colnum++) {
+          r = 255-(colnum*255/76);
+          g = (colnum*510/76);
+          b = (colnum*255/76);
+          if (g>255) g = 510-g;
+          printf "\033[48;2;%d;%d;%dm", r,g,b;
+          printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+          printf "%s\033[0m", substr(s,colnum+1,1);
+      }
+      printf "\n";
+  }'
+  # (lb): I added this, $('natch).
+  echo -e \
+    "$(attr_bold)bold$(attr_reset) " \
+    "$(attr_italic)italic$(attr_reset) " \
+    "$(attr_underline)underline$(attr_reset) " \
+    "$(attr_strikethrough)strikethrough$(attr_reset)"
+}
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+
+. "$(dirname ${BASH_SOURCE[0]})/colors.sh"
+
+if [[ ${BASH_SOURCE[0]} != $0 ]]; then
+  export -f test-truecolor
+else
+  test-truecolor "${@}"
+  exit $?
+fi
+
