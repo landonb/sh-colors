@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 # vim:tw=0:ts=2:sw=2:et:norl:ft=sh
 # Project: https://github.com/landonb/sh-colors#🤸
 # License: MIT
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-strip-colors () {
+strip_colors () {
   # - Strip color codes from stream. Ref:
   #   http://stackoverflow.com/questions/17998978/removing-colors-from-output
   /bin/sed -E "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" "$@"
@@ -13,10 +13,10 @@ strip-colors () {
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-if [[ ${BASH_SOURCE[0]} != $0 ]]; then
-  export -f strip-colors
+if [ ${#BASH_SOURCE} -ne 0 ] && [ "${BASH_SOURCE[0]}" != "$0" ]; then
+  export -f strip_colors
 else
-  strip-colors "${@}"
+  strip_colors "${@}"
   exit $?
 fi
 
