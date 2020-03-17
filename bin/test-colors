@@ -6,84 +6,112 @@
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
 test-colors () {
-  create_base_color_names () {
-    term_color_names+=('fg_pink')
-    term_color_names+=('fg_orange')
-    term_color_names+=('fg_skyblue')
-    term_color_names+=('fg_mediumgrey')
-    term_color_names+=('fg_lavender')
-    term_color_names+=('fg_tan')
-    term_color_names+=('fg_forest')
-    term_color_names+=('fg_maroon')
-    term_color_names+=('fg_hotpink')
-    term_color_names+=('fg_mintgreen')
-    term_color_names+=('fg_lightorange')
-    term_color_names+=('fg_lightred')
-    term_color_names+=('fg_jade')
-    term_color_names+=('fg_lime')
-
-    term_color_names+=('bg_pink')
-    term_color_names+=('bg_orange')
-    term_color_names+=('bg_skyblue')
-    term_color_names+=('bg_mediumgrey')
-    term_color_names+=('bg_lavender')
-    term_color_names+=('bg_tan')
-    term_color_names+=('bg_forest')
-    term_color_names+=('bg_maroon')
-    term_color_names+=('bg_hotpink')
-    term_color_names+=('bg_mintgreen')
-    term_color_names+=('bg_lightorange')
-    term_color_names+=('bg_lightred')
-    term_color_names+=('bg_jade')
-    term_color_names+=('bg_lime')
-
-    term_color_names+=('fg_black')
-    term_color_names+=('fg_red')
-    term_color_names+=('fg_green')
-    term_color_names+=('fg_yellow')
-    term_color_names+=('fg_blue')
-    term_color_names+=('fg_magenta')
-    term_color_names+=('fg_cyan')
-    term_color_names+=('fg_lightgray')
-    term_color_names+=('fg_darkgray')
-    term_color_names+=('fg_lightred')
-    term_color_names+=('fg_lightgreen')
-    term_color_names+=('fg_lightyellow')
-    term_color_names+=('fg_lightblue')
-    term_color_names+=('fg_lightmagenta')
-    term_color_names+=('fg_lightcyan')
-    term_color_names+=('fg_white')
-
-    term_color_names+=('bg_black')
-    term_color_names+=('bg_red')
-    term_color_names+=('bg_green')
-    term_color_names+=('bg_yellow')
-    term_color_names+=('bg_blue')
-    term_color_names+=('bg_magenta')
-    term_color_names+=('bg_cyan')
-    term_color_names+=('bg_lightgray')
-    term_color_names+=('bg_darkgray')
-    term_color_names+=('bg_lightred')
-    term_color_names+=('bg_lightgreen')
-    term_color_names+=('bg_lightyellow')
-    term_color_names+=('bg_lightblue')
-    term_color_names+=('bg_lightmagenta')
-    term_color_names+=('bg_lightcyan')
-    term_color_names+=('bg_white')
-  }
-
-  declare -a term_color_names
-  term_color_names=()
-  create_base_color_names
 
   _echo () {
     [ "$(echo -e)" = '' ] && echo -e "${@}" || echo "${@}"
   }
 
-  for ((i = 0; i < ${#term_color_names[@]}; i++)); do
-    local nom="${term_color_names[$i]}"
-    # BASH: `!` uses a variable's value as other variable's name.
-    _echo "Some $(eval "${nom}")}COLOR $(attr_underline)is $(attr_bold)nice$(attr_reset) surely [${nom}]."
+  _echo_test () {
+    local col="$1"
+    _echo "$(eval "${col}")COLOR $(attr_bold)is$(res_bold) $(attr_italic)so$(res_italic) $(attr_underline)nice$(res_underline)$(attr_reset) » ${col}"
+  }
+
+  # ***
+
+  declare -a shcolor_names
+
+  _add_colors_rgb_truecolor_fg () {
+    shcolor_names+=('fg_pink')
+    shcolor_names+=('fg_orange')
+    shcolor_names+=('fg_skyblue')
+    shcolor_names+=('fg_mediumgrey')
+    shcolor_names+=('fg_lavender')
+    shcolor_names+=('fg_tan')
+    shcolor_names+=('fg_forest')
+    shcolor_names+=('fg_maroon')
+    shcolor_names+=('fg_hotpink')
+    shcolor_names+=('fg_mintgreen')
+    shcolor_names+=('fg_lightorange')
+    shcolor_names+=('fg_lightred')
+    shcolor_names+=('fg_jade')
+    shcolor_names+=('fg_lime')
+  }
+
+  _add_colors_rgb_truecolor_bg () {
+    shcolor_names+=('bg_pink')
+    shcolor_names+=('bg_orange')
+    shcolor_names+=('bg_skyblue')
+    shcolor_names+=('bg_mediumgrey')
+    shcolor_names+=('bg_lavender')
+    shcolor_names+=('bg_tan')
+    shcolor_names+=('bg_forest')
+    shcolor_names+=('bg_maroon')
+    shcolor_names+=('bg_hotpink')
+    shcolor_names+=('bg_mintgreen')
+    shcolor_names+=('bg_lightorange')
+    shcolor_names+=('bg_lightred')
+    shcolor_names+=('bg_jade')
+    shcolor_names+=('bg_lime')
+  }
+
+  _add_colors_256_palette_fg () {
+    # 256-color palette colors.
+    # - Depending on your display, these colors may not appear like
+    #   you'd expect, e.g., black might look more like a dark gray.
+    shcolor_names+=('fg_black')
+    shcolor_names+=('fg_red')
+    shcolor_names+=('fg_green')
+    shcolor_names+=('fg_yellow')
+    shcolor_names+=('fg_blue')
+    shcolor_names+=('fg_magenta')
+    shcolor_names+=('fg_cyan')
+    shcolor_names+=('fg_lightgray')
+    shcolor_names+=('fg_darkgray')
+    shcolor_names+=('fg_lightred')
+    shcolor_names+=('fg_lightgreen')
+    shcolor_names+=('fg_lightyellow')
+    shcolor_names+=('fg_lightblue')
+    shcolor_names+=('fg_lightmagenta')
+    shcolor_names+=('fg_lightcyan')
+    shcolor_names+=('fg_white')
+  }
+
+  _add_colors_256_palette_bg () {
+    shcolor_names+=('bg_black')
+    shcolor_names+=('bg_red')
+    shcolor_names+=('bg_green')
+    shcolor_names+=('bg_yellow')
+    shcolor_names+=('bg_blue')
+    shcolor_names+=('bg_magenta')
+    shcolor_names+=('bg_cyan')
+    shcolor_names+=('bg_lightgray')
+    shcolor_names+=('bg_darkgray')
+    shcolor_names+=('bg_lightred')
+    shcolor_names+=('bg_lightgreen')
+    shcolor_names+=('bg_lightyellow')
+    shcolor_names+=('bg_lightblue')
+    shcolor_names+=('bg_lightmagenta')
+    shcolor_names+=('bg_lightcyan')
+    shcolor_names+=('bg_white')
+  }
+
+  shcolor_names=()
+  _add_colors_rgb_truecolor_fg
+  _add_colors_rgb_truecolor_bg
+  _echo "$(attr_bold)RGB truecolor injectors$(res_bold)"
+  _echo             "━━━━━━━━━━━━━━━━━━━━━━━"
+  for ((i = 0; i < ${#shcolor_names[@]}; i++)); do
+    _echo_test "${shcolor_names[$i]}"
+  done
+
+  shcolor_names=()
+  _add_colors_256_palette_fg
+  _add_colors_256_palette_bg
+  _echo
+  _echo "$(attr_bold)256-color injectors$(res_bold)"
+  _echo             "━━━━━━━━━━━━━━━━━━━"
+  for ((i = 0; i < ${#shcolor_names[@]}; i++)); do
+    _echo_test "${shcolor_names[$i]}"
   done
 }
 
