@@ -20,14 +20,20 @@ bash_sourced () { declare -p FUNCNAME > /dev/null 2>&1; }
 
 if ! shell_sourced; then
   strip_colors "${@}"
-elif bash_sourced; then
-  # Generally no need to export except for completeness: this wires
-  # strip_colors to work from sub-process, e.g., you could . and bash
-  # `. strip-colors ; /bin/bash --noprofile --norc` and it'd be there.
-  export -f strip_colors
 else
-  # E.g., sourced in `dash`, which has no `export -f`, so strip_colors
-  # will be available in the current session, but absent from any spawns.
-  true
+  if bash_sourced; then
+    # Generally no need to export except for completeness: this wires
+    # strip_colors to work from sub-process, e.g., you could . and bash
+    # `. strip-colors ; /bin/bash --noprofile --norc` and it'd be there.
+    export -f strip_colors
+  else
+    # E.g., sourced in `dash`, which has no `export -f`, so strip_colors
+    # will be available in the current session, but absent from any spawns.
+    true
+  fi
+
+  unset this_file_name
+  unset -f shell_sourced
+  unset -f bash_sourced
 fi
 

@@ -54,5 +54,9 @@ if ! shell_sourced; then
   test_truecolor
 elif bash_sourced; then
   export -f test_truecolor
+
+  unset this_file_name
+  unset -f shell_sourced
+  unset -f bash_sourced
 fi
 
