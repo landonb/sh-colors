@@ -1,6 +1,6 @@
 # `sh-colors`
 
-Concise ANSI color and attribute injectors for the shell.
+POSIX-compliant ANSI color and attribute injectors for the shell.
 
 *Spice up your command line!*
 
