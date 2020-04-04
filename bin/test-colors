@@ -103,9 +103,9 @@ test-colors () {
   shcolor_names=()
   _add_colors_256_palette_fg
   _add_colors_256_palette_bg
-  _echo
-  _echo "$(attr_bold)256-color injectors$(res_bold)"
-  _echo             "━━━━━━━━━━━━━━━━━━━"
+  echo
+  echo "$(attr_bold)256-color injectors$(res_bold)"
+  echo             "━━━━━━━━━━━━━━━━━━━"
   for ((i = 0; i < ${#shcolor_names[@]}; i++)); do
     _echo_color "${shcolor_names[$i]}"
   done
