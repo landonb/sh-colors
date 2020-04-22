@@ -108,7 +108,7 @@ The included `Makefile` can also be used to help install.
   sudo make install
   ```
 
-- Specify a `PREFIX` to install anywhere else, such as locally, , e.g.,
+- Specify a `PREFIX` to install anywhere else, such as locally, e.g.,
 
   ```shell
   # Install to $USER/.local/bin
