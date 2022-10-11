@@ -54,7 +54,6 @@ if ! shell_sourced; then
   test_truecolor "$@"
 else
   bash_sourced && export -f test_truecolor
-
   unset -v this_file_name
   unset -f shell_sourced
   unset -f bash_sourced

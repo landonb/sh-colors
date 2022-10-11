@@ -31,7 +31,6 @@ else
     # will be available in the current session, but absent from any spawns.
     true
   fi
-
   unset -v this_file_name
   unset -f shell_sourced
   unset -f bash_sourced
