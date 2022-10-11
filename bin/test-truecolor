@@ -51,7 +51,7 @@ else
 fi
 
 if ! shell_sourced; then
-  test_truecolor "${@}"
+  test_truecolor "$@"
 else
   bash_sourced && export -f test_truecolor
 

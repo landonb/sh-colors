@@ -19,7 +19,7 @@ shell_sourced () { [ "$(basename -- "$0")" != "${this_file_name}" ]; }
 bash_sourced () { declare -p FUNCNAME > /dev/null 2>&1; }
 
 if ! shell_sourced; then
-  strip_colors "${@}"
+  strip_colors "$@"
 else
   if bash_sourced; then
     # Generally no need to export except for completeness: this wires
