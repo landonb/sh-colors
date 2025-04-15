@@ -5,7 +5,7 @@
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-test_truecolor () {
+test_truecolor() {
   # Author: jdhao / LastMod: 2020-03-11
   # https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
   # License: https://creativecommons.org/licenses/by-nc-nd/4.0/
@@ -34,9 +34,9 @@ test_truecolor () {
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
 this_file_name="test-truecolor"
-shell_sourced () { [ "$(basename -- "$0")" != "${this_file_name}" ]; }
+shell_sourced() { [ "$(basename -- "$0")" != "${this_file_name}" ]; }
 # Note that bash_sourced only meaningful if shell_sourced is true.
-bash_sourced () { declare -p FUNCNAME > /dev/null 2>&1; }
+bash_sourced() { declare -p FUNCNAME >/dev/null 2>&1; }
 
 if ! shell_sourced; then
   # When executed in POSIX, $0 is path to this script,
@@ -59,4 +59,3 @@ else
   unset -f shell_sourced
   unset -f bash_sourced
 fi
-
