@@ -31,8 +31,8 @@ and then call its functions to adorn text.
 E.g.,
 
   ```shell
-  $ . colors.sh
-  $ echo "$(fg_pink)$(bg_darkgray)Hello, $(attr_italic)World!$(attr_reset)"
+  . colors.sh
+  echo "$(fg_pink)$(bg_darkgray)Hello, $(attr_italic)World!$(attr_reset)"
   ```
 
 ### Terminal-sensing enablement
@@ -155,7 +155,7 @@ You can also run `test-colors` to see an example of the colors.
 Run `test-colors` to see the list of color functions.
 
   ```shell
-  $ test-colors
+  test-colors
   ```
 
 ![test-colors screenshot](docs/assets/static-test-colors-wb.png "test-colors example")
@@ -185,7 +185,7 @@ Use strip-colors to remove control codes from an input stream, e.g.,:
 Use `test-truecolor` to verify that your terminal supports 24-bit so-called "true colors".
 
   ```shell
-  $ test-truecolor
+  test-truecolor
   ```
 
 You should see something like:
@@ -193,4 +193,3 @@ You should see something like:
 ![test-truecolor screenshot](docs/assets/static-test-truecolor-wb.png "test-truecolor example")
 
 Enjoy!
-
