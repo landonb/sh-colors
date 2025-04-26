@@ -5,7 +5,7 @@
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-strip_colors () {
+strip_colors() {
   # - Strip color codes from stream. Ref:
   #   http://stackoverflow.com/questions/17998978/removing-colors-from-output
   /usr/bin/env sed -E "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" "$@"
@@ -14,9 +14,9 @@ strip_colors () {
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
 this_file_name="strip-colors"
-shell_sourced () { [ "$(basename -- "$0")" != "${this_file_name}" ]; }
+shell_sourced() { [ "$(basename -- "$0")" != "${this_file_name}" ]; }
 # Note that bash_sourced only meaningful if shell_sourced is true.
-bash_sourced () { declare -p FUNCNAME > /dev/null 2>&1; }
+bash_sourced() { declare -p FUNCNAME >/dev/null 2>&1; }
 
 if ! shell_sourced; then
   strip_colors "$@"
@@ -35,4 +35,3 @@ else
   unset -f shell_sourced
   unset -f bash_sourced
 fi
-

@@ -5,9 +5,9 @@
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-test-colors () {
+test-colors() {
 
-  _echo_color () {
+  _echo_color() {
     local col="$1"
     echo "$(eval "${col}")COLOR $(attr_bold)is$(res_bold) $(attr_italic)so$(res_italic) $(attr_underline)nice$(res_underline)$(attr_reset) » ${col}"
   }
@@ -16,7 +16,7 @@ test-colors () {
 
   declare -a shcolor_names
 
-  _add_colors_rgb_truecolor_fg () {
+  _add_colors_rgb_truecolor_fg() {
     shcolor_names+=('fg_pink')
     shcolor_names+=('fg_orange')
     shcolor_names+=('fg_skyblue')
@@ -33,7 +33,7 @@ test-colors () {
     shcolor_names+=('fg_lime')
   }
 
-  _add_colors_rgb_truecolor_bg () {
+  _add_colors_rgb_truecolor_bg() {
     shcolor_names+=('bg_pink')
     shcolor_names+=('bg_orange')
     shcolor_names+=('bg_skyblue')
@@ -50,7 +50,7 @@ test-colors () {
     shcolor_names+=('bg_lime')
   }
 
-  _add_colors_256_palette_fg () {
+  _add_colors_256_palette_fg() {
     # 256-color palette colors.
     # - Depending on your display, these colors may not appear like
     #   you'd expect, e.g., black might look more like a dark gray.
@@ -72,7 +72,7 @@ test-colors () {
     shcolor_names+=('fg_white')
   }
 
-  _add_colors_256_palette_bg () {
+  _add_colors_256_palette_bg() {
     shcolor_names+=('bg_black')
     shcolor_names+=('bg_red')
     shcolor_names+=('bg_green')
@@ -95,7 +95,7 @@ test-colors () {
   _add_colors_rgb_truecolor_fg
   _add_colors_rgb_truecolor_bg
   echo "$(attr_bold)RGB truecolor injectors$(res_bold)"
-  echo             "━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━"
   for ((i = 0; i < ${#shcolor_names[@]}; i++)); do
     _echo_color "${shcolor_names[$i]}"
   done
@@ -105,7 +105,7 @@ test-colors () {
   _add_colors_256_palette_bg
   echo
   echo "$(attr_bold)256-color injectors$(res_bold)"
-  echo             "━━━━━━━━━━━━━━━━━━━"
+  echo "━━━━━━━━━━━━━━━━━━━"
   for ((i = 0; i < ${#shcolor_names[@]}; i++)); do
     _echo_color "${shcolor_names[$i]}"
   done
@@ -122,4 +122,3 @@ if [ "${BASH_SOURCE[0]}" = "$0" ]; then
 else
   export -f test-colors
 fi
-
