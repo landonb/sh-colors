@@ -12,7 +12,7 @@
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-# Ref:
+# REFER:
 # - "Bash tips: Colors and formatting (ANSI/VT100 Control sequences)"
 #   https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
@@ -20,13 +20,16 @@
 
 # *** Color On/Off controls.
 
-# YOU: To deliberately control whether to color or not, set
-#         SHCOLORS_OFF=false|true
-#      otherwise, [ -t 1 ] is used when this script is sourced
-#      to determine if color should be used. (More specifically,
-#      it determines whether to inject ANSI control codes into the
-#      output or not, based on whether stdout (1) is attached to a
-#      terminal.)
+# USAGE: To deliberately control whether to color or not, set:
+#
+#   SHCOLORS_OFF=false|true
+#
+#  otherwise, [ -t 1 ] is used when this script is sourced to
+#  determine if color should be used.
+#
+#  (More specifically, [ -t 1 ] determines whether to inject
+#   ANSI control codes into the output or not, based on whether
+#   stdout (1) is attached to a terminal.)
 
 # Set color flag globally, because _hofr_no_color is called in a pipeline
 # from within this script, e.g., `_hofr_no_color && return`. And [ -t 1 ]
@@ -50,18 +53,18 @@ _hofr_no_color() {
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-# (lb): In Bash, the escape sequences \e, \033 and \x1b can be used
-#       interchangeably, but \033 is the more portable of the 3.
-# [QUESTION/2020-09-18: If they're interchangeable, how is one more portable?
-#  I think years ago I had issues using \e but I apparently didn't say so here.]
+# REFER: In Bash, the escape sequences \e, \033 and \x1b can be used
+#        interchangeably, but \033 is the more portable of the three.
+# [DUNNO/2020-09-18: If they're interchangeable, how is one more portable?
+#  I think years ago I had issues using \e but I didn't document the issue.]
 # - The `\e` is a character escape sequence; the other two are Oct.
-#   and Hex. reps., respect. (See also ^[, i.e., you can hit Ctrl-[
+#   and Hex. reps., respectively. (See also ^[, i.e., you can hit Ctrl-[
 #   to send ESCAPE sequence. And also 27, the decimal equivalent.)
 # - Because the `\e` representation feels more Bashy (and probably is
 #   less universal), we'll use either the octal or hexadecimal format.
 #   - Let's use the octal format.
 #     - A search on "\033" returns 255,000 hits,
-#     - A search on "\x1b" returns 74,100 results.
+#     - A search on "\x1b" returns  74,100 results.
 #     - (And on "\e", 4,970,000 results, but that includes
 #       "\E NO. 316 - City of Drain" in the top 100 results
 #       (AN ORDINANCE FIXING ELECTRICAL RATES).)
@@ -71,35 +74,36 @@ _hofr_no_color() {
 # - And let's not talk about double- versus single-quotes. Single
 #   is technically more responsible to signal that you want nothing
 #   interpolated, but double looks nicer, IMHO. Though single is
-#   easier to type. Such difficult decisions!
+#   easier to type. Such difficult decisions! (And not that shfmt
+#   does not enforce '' vs. "".)
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
-# NOTE: tmux does not show all ANSI 256 color codes,
-#       but maps some to other colors
-#       (like pink and orange to red).
+# SAVVY: tmux does not show all ANSI 256 color codes, but
+# maps some to other colors (like pink and orange to red).
 #
-#       - For example, when TERM=*-256color, using the
-#         256-color lightorange code:
-#           printf "\033[38;5;215m"
-#         works.
+# - For example, when TERM=*-256color, using the
+#   256-color lightorange code:
+#     printf "\033[38;5;215m"
+#   works.
 #
-#       - But in tmux, when TERM=tmux, that lightorange
-#         code maps to red.
+# - But in tmux, when TERM=tmux, that lightorange
+#   code maps to red.
 #
-#       - So we use RGB color formats below, e.g.,
-#         for lightorange:
-#           printf "\033[38;2;255;175;95m"
+# - So we use RGB color formats below, e.g.,
+#   for lightorange:
+#
+#     printf "\033[38;2;255;175;95m"
 #
 # - R,G,B Formats:
 #
 #     \033[38;2;<r>;<g>;<b>m  # RGB foreground color.
 #     \033[48;2;<r>;<g>;<b>m  # RGB background color.
 #
-# - (lb): I used Gimp to extract RGB from
+# - REFER: I used Gimp to extract RGB from
 #
 #     https://i.stack.imgur.com/KTSQa.png
-#     # from
+#     # BEGET:
 #     https://en.wikipedia.org/wiki/ANSI_escape_code
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
