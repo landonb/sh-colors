@@ -557,7 +557,8 @@ attr_underlined() {
   attr_underline
 }
 
-# Gnome/Mate do not support blink, <sigh>.
+# gnome-terminal/mate-terminal does not support blink, <sigh>.
+# - Nor does Alacritty, or macOS Terminal.
 attr_blink() {
   _hofr_no_color && return
   printf "\033[5m"
