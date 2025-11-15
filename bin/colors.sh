@@ -507,6 +507,66 @@ bg_seal_brown() {
 #
 # [See: bg_seal_brown]
 
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+
+# REFER: It's probably more "responsible" to use `tput` to generate
+# escape sequences for formatting options, e.g.,
+#
+#   tput smul
+#
+# Vs.
+#
+#   printf "\033[4m"
+#
+# But author has never had an issue not using tput.
+#
+# - I think with modern terminals, if an escape sequence is not
+#   supported, it's simply ignored.
+#
+#   - And using tput would ensure that no escape seqence is
+#     generated (AFAIK).
+#
+#     - E.g., most terminals support underlining:
+#
+#         $ echo -e "$(tput smul)foo$(attr_reset)"
+#         f̲o̲o̲
+#
+#       And you can pipe to hexdump to inspect the sequence:
+#
+#         # Generate 'begin underline mode' sequence
+#         $ tput smul | hd
+#         00000000  1b 5b 34 6d               |.[4m|
+#
+#     - But your terminal probably doesn't support subscripting:
+#
+#         $ tput ssubm | hd
+#
+#       And it probably doesn't support blink, either:
+#
+#         $ echo -e "$(tput blink)foo$(attr_reset)"
+#         foo
+#
+#       Although that option probably does generate an escape seq.:
+#
+#         $ tput blink | hd
+#         00000000  1b 5b 35 6d               |.[5m|
+#
+# - INERT/2025-11-15: And because this library has never used `tput`,
+#   we're not going to add it. (But be aware of it, just in case we
+#   have an issue not using it in the future.)
+#
+# - In any case, you can verify that the sequences below are the same
+#   as the tput sequences, e.g.,
+#
+#     $ printf "\001$(tput sitm)\002" | hd
+#     00000000  01 1b 5b 33 6d 02             |..[3m.|
+#
+#     $ printf "\001\033[3m\002" | hd
+#     00000000  01 1b 5b 33 6d 02             |..[3m.|
+#
+# REFER: For list of tput cap-codes, see:
+#   man 5 terminfo
+
 # ***
 
 # Note that you can also use tput to clear formatting, e.g.,
@@ -534,11 +594,17 @@ attr_bold() {
   printf "\033[1m"
 }
 
+# CALSO:
+#   $ tput dim | hd
+#   00000000  1b 5b 32 6d               |.[2m|
 attr_dim() {
   _hofr_no_color && return
   printf "\033[2m"
 }
 
+# CALSO:
+#   $ tput sitm | hd
+#   00000000  1b 5b 33 6d               |.[3m|
 attr_emphasis() {
   _hofr_no_color && return
   printf "\033[3m"
@@ -548,6 +614,9 @@ attr_italic() {
   attr_emphasis
 }
 
+# CALSO:
+#   $ tput smul | hd
+#   00000000  1b 5b 34 6d               |.[4m|
 attr_underline() {
   _hofr_no_color && return
   printf "\033[4m"
@@ -559,23 +628,38 @@ attr_underlined() {
 
 # gnome-terminal/mate-terminal does not support blink, <sigh>.
 # - Nor does Alacritty, or macOS Terminal.
+# CALSO:
+#   $ tput blink | hd
+#   00000000  1b 5b 35 6d               |.[5m|
 attr_blink() {
   _hofr_no_color && return
   printf "\033[5m"
 }
 
+# CALSO: Aka begin standout mode:
+#   $ tput smso | hd
+#   00000000  1b 5b 37 6d               |.[7m|
 attr_invert() {
   # Aka negative image.
   _hofr_no_color && return
   printf "\033[7m"
 }
 
+# CALSO:
+#   $ tput invis | hd
+#   00000000  1b 5b 38 6d               |.[8m|
 attr_hidden() {
   # Aka invisible image.
   _hofr_no_color && return
   printf "\033[8m"
 }
 
+# CALSO:
+#   $ tput smxx | hd
+#   00000000  1b 5b 39 6d               |.[9m|
+# - THANX: tput cap-code 'smxx' not documented in `man 5 terminfo`,
+#   but found via search:
+#     https://github.com/tmux/tmux/issues/1137
 attr_strikethrough() {
   _hofr_no_color && return
   printf "\033[9m"
@@ -585,6 +669,9 @@ attr_strikethrough() {
 
 res_all() { attr_reset; }
 
+# CALSO:
+#   $ tput sitm | hd
+#   00000000  1b 5b 33 6d               |.[3m|
 res_bold() {
   _hofr_no_color && return
   printf "\033[22m"
@@ -593,6 +680,9 @@ res_bold() {
 # (lb): I do not recall what 'dim' means.
 res_dim() { res_bold; }
 
+# CALSO:
+#   $ tput ritm | hd
+#   00000000  1b 5b 32 33 6d            |.[23m|
 res_emphasis() {
   _hofr_no_color && return
   printf "\033[23m"
@@ -602,6 +692,9 @@ res_italic() {
   res_emphasis
 }
 
+# CALSO:
+#   $ tput rmul | hd
+#   00000000  1b 5b 32 34 6d            |.[24m|
 res_underline() {
   _hofr_no_color && return
   printf "\033[24m"
@@ -611,17 +704,20 @@ res_underlined() {
   res_underline
 }
 
+# DUNNO: `man 5 terminfo` does not show cap-code to reset 'blink'.
 res_blink() {
   _hofr_no_color && return
   printf "\033[25m"
 }
 
+# DUNNO: `man 5 terminfo` does not show cap-code to reset 'smso'.
 res_reverse() {
   # Aka negative image.
   _hofr_no_color && return
   printf "\033[27m"
 }
 
+# DUNNO: `man 5 terminfo` does not show cap-code to reset 'invis'.
 res_hidden() {
   # Aka invisible image.
   _hofr_no_color && return
