@@ -9,12 +9,13 @@
 #   http://stackoverflow.com/questions/17998978/removing-colors-from-output
 #   - Albeit change
 #       (;[0-9]{1,2})? → (;[0-9]{1,3})*
+#     and remove 0x01/0x02 envelope,
 #     e.g., using author sh-logger:
 #       debug foo
 #       debug foo | hexdump
 #       debug foo | strip-colors | hexdump
 strip_colors() {
-  /usr/bin/env sed -E "s/\x1B\[([0-9]{1,2}(;[0-9]{1,3})*)?[mGK]//g" "$@"
+  /usr/bin/env sed -E "s/\x01?\x1B\[([0-9]{1,2}(;[0-9]{1,3})*)?[mGK]\x02?//g" "$@"
 }
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
