@@ -5,9 +5,9 @@
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
+# - THANX: Strip color codes from stream:
+#   http://stackoverflow.com/questions/17998978/removing-colors-from-output
 strip_colors() {
-  # - Strip color codes from stream. Ref:
-  #   http://stackoverflow.com/questions/17998978/removing-colors-from-output
   /usr/bin/env sed -E "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" "$@"
 }
 
