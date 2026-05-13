@@ -5,6 +5,7 @@
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
+# CRUMB: strip-colors: Remove ASCII control character color escape sequences from stream.
 # - THANX: Strip color codes from stream:
 #   http://stackoverflow.com/questions/17998978/removing-colors-from-output
 #   - Albeit change
