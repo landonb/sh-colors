@@ -167,8 +167,17 @@ _hofr_no_color() {
 # STX: End of Non-printing ‖ \x02 Start of Text ‖ tells shell to
 #      resume counting chars towards the visible len. of the prompt.
 
-SHCOLORS_SOH="\001"
-SHCOLORS_STX="\002"
+prepare_non_printing_signals() {
+  SHCOLORS_SOH=""
+  SHCOLORS_STX=""
+
+  # HSTRY/2026-06-10: Only if over SSH, otherwise `less -R` and `bat` complain.
+  if [ -n "${SSH_CLIENT}" ] || [ -n "${SSH_TTY}" ] || [ -n "${SSH_CONNECTION}" ]; then
+    SHCOLORS_SOH="\001"
+    SHCOLORS_STX="\002"
+  fi
+}
+prepare_non_printing_signals
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
