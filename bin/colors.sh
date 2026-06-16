@@ -167,7 +167,7 @@ _hofr_no_color() {
 # STX: End of Non-printing ‖ \x02 Start of Text ‖ tells shell to
 #      resume counting chars towards the visible len. of the prompt.
 
-prepare_non_printing_signals() {
+_shcol_prepare_non_printing_signals() {
   SHCOLORS_SOH=""
   SHCOLORS_STX=""
 
@@ -177,8 +177,8 @@ prepare_non_printing_signals() {
     SHCOLORS_STX="\002"
   fi
 }
-prepare_non_printing_signals
-unset -f prepare_non_printing_signals
+_shcol_prepare_non_printing_signals
+unset -f _shcol_prepare_non_printing_signals
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
