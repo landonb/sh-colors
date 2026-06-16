@@ -612,6 +612,19 @@ bg_seal_brown() {
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
+# CALSO: We use completion to find func. names. Naïve alt: Grep this file:
+#   grep "() {$" ~/.kit/sh/sh-colors/bin/colors.sh \
+#   | sed 's/^\(.*\)() {$/  export -f \1/' \
+_shcol_export() {
+  for func_prefix in "_shcol_" "bg_" "fg_" "attr_" "res_"; do
+    for func_name in $(compgen -A function "${func_prefix}"); do
+      export -f "${func_name}"
+    done
+  done
+}
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
+
 # REFER: It's probably more "responsible" to use `tput` to generate
 # escape sequences for formatting options, e.g.,
 #
