@@ -178,6 +178,7 @@ prepare_non_printing_signals() {
   fi
 }
 prepare_non_printing_signals
+unset -f prepare_non_printing_signals
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
