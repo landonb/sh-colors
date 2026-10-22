@@ -288,7 +288,7 @@ fg_lightorange() {
   printf "${SHCOLORS_SOH}\033[38;2;255;175;95m${SHCOLORS_STX}"
 }
 
-# ISOFF/2026-10-21: Same color as other \033[91m 'fg_lightred':
+# ISOFF/2026-10-21: Same color [ef766d] as other \033[91m 'fg_lightred':
 #
 #   fg_lightred() {
 #     _shcol_no_col && return
